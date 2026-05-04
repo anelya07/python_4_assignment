@@ -1,14 +1,15 @@
 #TASK 7
 
 import classes
+from classes import ResultSaver
 
 dl = classes.DataLoader('students.csv')
 dl.load()
 
 analyser = classes.GpaAnalyser(dl.students)
-print(analyser)
-analyser.analyse()
-analyser.print_results()
+saver = ResultSaver(analyser.result, 'output/result.json')
+report = classes.Report(analyser, saver)
+report.generate()
 
 # fm = classes.FileManager('students.csv')
 # if not fm.check_file():
