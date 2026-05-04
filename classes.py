@@ -60,7 +60,7 @@ class DataAnalyser:
            print(f"{key}: {value}")
 
     def __str__(self):
-        return f"DataAnalyser: base class, {len(self.students)} students"
+        return f"\nDataAnalyser: base class, {len(self.students)} students"
 
 class GpaAnalyser(DataAnalyser):
     def __init__(self, students):
@@ -98,7 +98,36 @@ class GpaAnalyser(DataAnalyser):
         print('=' * 30)
 
     def __str__(self):
-        return f"GpaAnalyser: GPA Statistics, {len(self.students)} students"
+        return f"\nGpaAnalyser: GPA Statistics, {len(self.students)} students"
+
+class CountryAnalyser(DataAnalyser):
+    def __init__(self, students):
+        super().__init__(students)
+
+    def analyse(self):
+        country_counts = {}
+        for row in self.students:
+                country = row["country"]
+                if country in country_counts:
+                    country_counts[country] += 1
+                else:
+                    country_counts[country] = 1
+
+        sorted_countries = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)
+        top_3 = sorted_countries[:3]
+
+        self.result = {"total_students": len(self.students), "total_countries": len(country_counts), "top_3": top_3}
+        return self.result
+
+    def print_results(self):
+        print('=' * 30)
+        print('COUNTRY ANALYSIS REPORT')
+        print('=' * 30)
+        super().print_results()
+        print('=' * 30)
+
+    def __str__(self):
+        return f"\nCountryAnalyser: Country Analysis, {len(self.students)} students"
 
 class ResultSaver:
     def __init__(self, result, output_path):

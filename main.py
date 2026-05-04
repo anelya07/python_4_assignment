@@ -1,25 +1,23 @@
 #TASK 7
 
 import classes
-from classes import ResultSaver
 
+fm = classes.FileManager('students.csv')
+fm.check_file()
+fm.create_output_folder()
 dl = classes.DataLoader('students.csv')
 dl.load()
+dl.preview()
 
-analyser = classes.GpaAnalyser(dl.students)
-saver = ResultSaver(analyser.result, 'output/result.json')
-report = classes.Report(analyser, saver)
+analysers = [classes.GpaAnalyser(dl.students), classes.CountryAnalyser(dl.students)]
+print('Running all analysers:')
+print('-'*30)
+for a in analysers:
+    print(a)
+    a.analyse()
+    a.print_results()
+
+saver = classes.ResultSaver(analysers[0].result, 'output/result.json')
+report = classes.Report(analysers[0], saver)
 report.generate()
-
-# fm = classes.FileManager('students.csv')
-# if not fm.check_file():
-#     print('Stopping program.')
-#     exit()
-# fm.create_output_folder()
-# saver = classes.ResultSaver(analyser.result, 'output/result.json')
-# saver.save_json()
-#
-# print('-'*30)
-# wr = classes.DataLoader('wrong.csv')
-# wr.load()
 
