@@ -29,11 +29,9 @@ class DataLoader:
 
     def load(self):
         try:
-            print("\nLoading data...")
             with open(self.filename, encoding = 'utf-8') as file:
                 reader = csv.DictReader(file)
                 self.students = list(reader)
-                print(f'Data loaded successfully: {len(self.students)} students')
                 return self.students
         except FileNotFoundError:
             print(f"Error: File '{self.filename}' not found. Please check the filename.")
@@ -53,6 +51,20 @@ class DataAnalyser:
     def __init__(self, students):
         self.students = students
         self.result = {}
+
+    def analyse(self):
+        print("Not implemented — use a child class")
+
+    def print_results(self):
+       for key,value in self.result.items():
+           print(f"{key}: {value}")
+
+    def __str__(self):
+        return f"DataAnalyser: base class, {len(self.students)} students"
+
+class GpaAnalyser(DataAnalyser):
+    def __init__(self, students):
+        super().__init__(students)
 
     def analyse(self):
         gpas = []
@@ -77,7 +89,9 @@ class DataAnalyser:
 
         self.result = {"analysis": "GPA Statistics", "total_students": len(self.students), "average_gpa": round(avg_gpa, 2), "max_gpa": max_gpa, "min_gpa": min_gpa, "high_performers": counter, "high_gpa": len(high_gpa), "gpa_values": gpa_values[:5], "hard_workers": len(hard_workers)}
         return self.result
+
     def print_results(self):
+        print('-' * 30)
         print('GPA Analysis')
         print('-' * 30)
         print('Total students: ', self.result["total_students"])
@@ -93,6 +107,9 @@ class DataAnalyser:
         print("Students studying > 4 hrs: ", self.result["hard_workers"])
         print('-' * 30)
 
+    def __str__(self):
+        return f"GpaAnalyser: GPA Statistics, {len(self.students)} students"
+
 class ResultSaver:
     def __init__(self, result, output_path):
         self.result = result
@@ -105,3 +122,4 @@ class ResultSaver:
         except Exception:
             print("General Error")
             return None
+
