@@ -5,7 +5,7 @@ import classes
 dl = classes.DataLoader('students.csv')
 dl.load()
 
-analyser = classes.GpaAnalyser(dl.students)   # ← вот здесь замена
+analyser = classes.GpaAnalyser(dl.students)
 print(analyser)
 analyser.analyse()
 analyser.print_results()
