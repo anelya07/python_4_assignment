@@ -50,7 +50,7 @@ class TestGpaAnalyser(unittest.TestCase):
         analyser2 = CountryAnalyser(self.sample)
         analyser2.analyse()
         self.assertIn("total_students", analyser2.result)
-        self.assertIn("total_students", analyser2.result)
+        self.assertIn("total_countries", analyser2.result)
         self.assertIn("top_3", analyser2.result)
 
     def test_analyse_twice(self):
