@@ -1,10 +1,7 @@
-#TASK 7
+#TASK 7-8
 
-from analytics.file_manager import FileManager
-from analytics.data_loader import DataLoader
-from analytics.analyser import GpaAnalyser,CountryAnalyser
-from analytics.result_saver import ResultSaver
-from analytics.report import Report
+from analytics import FileManager, DataLoader, ResultSaver, Report
+from analytics.analyser import GpaAnalyser, CountryAnalyser
 
 fm = FileManager('students.csv')
 fm.check_file()
